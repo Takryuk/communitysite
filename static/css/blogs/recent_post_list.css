@@ -1,0 +1,72 @@
+.container{
+    width: 80%;
+}
+
+
+
+.header-column-wrapper{
+    width:60%;
+    box-shadow: 2px  2px 2px rgba(0,0,0,0.3);
+    margin-bottom: 5vmax;
+}
+
+
+.header-column{
+    border: 1px solid rgba(0,0,0,0.3);
+    padding:1vmax;
+    width: 33.3%;
+    display: inline-block;
+    position: relative;
+    z-index: 1; /* 必要であればリンク要素の重なりのベース順序指定 */
+
+}
+
+.header-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-indent:-999px;
+    z-index: 2; /* 必要であればリンク要素の重なりのベース順序指定 */
+
+}
+
+.header-column3{
+    background-color: #ededed;
+
+}
+
+
+.group-name{
+    font-size: 3vmax;
+}
+
+
+@media only screen and (max-width: 992px){
+    .container{
+        width: 80%;
+    }
+
+}
+
+
+@media only screen and (max-width: 576px){
+    .container{
+        width: 100%;
+    }
+
+
+    .header-column-wrapper{
+        width:100%;
+    }
+
+
+    .group-name{
+        font-size: 5vmax;
+    }
+
+
+}
+
+

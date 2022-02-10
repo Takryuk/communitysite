@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<p>管理者があなた一人のグループが存在します。<br>
+    {% for group in only_one_administrator_group_list %}
+    グループ名&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{{ group.name }}<br>
+    {% endfor %}
+<p>上記のグループについては退会前に管理者を他のメンバーに託してください。<br>
+    もしくは、上記のグループを全て削除しても良い場合は、以下のリンクから退会することができます。</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="delete">
+    <button type="submit" class="btn btn-danger">退会ページ</button>
+</form>
+{% endblock %}

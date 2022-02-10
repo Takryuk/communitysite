@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+<form method="post">
+    <p>『{{ join_event.posted_group.name }}』主催のイベント{{ join_event.title }}に参加しますか？</p>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">参加する</button>
+</form>
+
+{% endblock content %}

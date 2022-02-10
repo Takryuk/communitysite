@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load message_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+    <div class="message-list">
+        <h2>イベントメッセージ</h2>
+        {% for has_read_event_message in has_read_event_messages %}
+            <div class="message">
+                <div class="message-header">
+                        <span class="event-message-title">{{ has_read_event_message.event_message.event.title }}</span>
+                        <br>
+                        グループ名 &nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_event_message.event_message.event.posted_group.name }}
+                </div>
+
+
+                <div class="message-header">
+                    <span>
+                        {% if has_read_event_message.event_message.title %}
+                            {{ has_read_event_message.event_message.title }}
+                        {% endif %}
+
+                        {% autoescape off%}
+                            {% has_read_event_message has_read_event_message %}
+                        {% endautoescape %}
+                    </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_event_message.event_message.sent_at }}</small>
+                </div>
+
+                <div class="message-body">
+
+                    <div class="content">
+                        {{ has_read_event_message.event_message.content|linebreaksbr|truncatechars:30 }}
+                    </div><br>
+                    <a href="{% url 'message:each_event_message_list' event_pk=has_read_event_message.event_message.event.pk %}">イベントメッセージ一覧</a>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+        {% if not has_read_event_messages %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+{% include 'pagination.html' %}
+
+{% endblock %}

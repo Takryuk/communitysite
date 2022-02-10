@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blogs/post_detail.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+
+    {% if post.image1 or post.image2 or image.image3 %}
+    <div class="post-image-list">
+
+
+        {% if post.image1 %}
+        <div class="post-image1">
+
+                <img class="image" src="{{ post.image1.url }}">
+        </div>
+
+        {% endif %}
+
+
+        {% if post.image2 %}
+
+            <img class="image" src="{{ post.image2.url }}">
+        {% endif %}
+
+
+        {% if post.image3 %}
+            <img class="image" src="{{ post.image3.url }}">
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+
+    <div class="group">
+        <div class="group-title">
+            <h1>{{ post.posted_group.name }}</h1>
+        </div>
+
+    </div>
+
+    <div class="post-title">
+        <span class="post-title-label">投稿</span>&nbsp;&nbsp;&nbsp;
+        <small class="event-posted-at">投稿日&nbsp;&nbsp;&nbsp;{{ post.posted_at }}</small>
+        {% if post.title%}
+            <div class="post-title-body">
+                <big>{{ post.title|linebreaksbr }}</big>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+    <div class="post-content">
+            <p>{{ post.content|linebreaksbr }}</p>
+    </div>
+
+
+
+
+<div>
+
+
+
+    {% if user.is_authenticated %}
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">コメントする</button>
+        </form>
+    {% endif %}
+    <h2>コメント</h2>
+    {% if comments %}
+
+        {% for comment in comments %}
+            <div class="comment">
+                <span class="comment-user">
+                    <a href="{% url 'users:user_detail' pk=comment.user.pk %}" class="user-link">
+                        &nbsp;{{ comment.user.user.user_name }}
+                    </a>
+                </span>
+                <small>&nbsp;&nbsp;&nbsp;{{ comment.commented_at }}</small>
+                <p>{{ comment.comment|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>まだコメントはありません。</p>
+    {% endif %}
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

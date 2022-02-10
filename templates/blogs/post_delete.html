@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <div>
+        {{ blog.title }}を本当に削除しますか？
+    </div>
+
+    <form method="post">
+      <button class="btn btn-danger">削除</button>
+      {% csrf_token %}
+    </form>
+
+{% endblock %}

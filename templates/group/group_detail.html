@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/eyecatch_image.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/group/group_detail.css' %}">
+
+
+{% endblock css %}
+
+{% block content %}
+
+
+<div class="group">
+    <div class="group-title">
+        <h1>{{ object.name }}</h1>
+    </div>
+
+    {% if object.subtitle %}
+
+        <p>{{ object.subtitle }}</p>
+    {% endif %}
+</div>
+
+<div class="header-column-wrapper">
+    <div class="header-column header-column1">
+        <a href="{% url 'group:group_detail' group_pk=object.pk %}" class="header-link"></a>グループ
+    </div><!--
+ --><div class="header-column header-column2">
+        <a href="{% url 'events:event_list' group_pk=object.pk %}" class="header-link"></a>イベント
+    </div><!--
+    --><div class="header-column header-column3">
+        <a href="{% url 'blogs:post_list' group_pk=object.pk %}" class="header-link"></a>ブログ
+    </div>
+</div>
+
+
+
+<div class="image-wrapper">
+    <div class="image-subwrapper">
+    <div class="group-image-list">
+
+            {% if object.image1 %}
+
+
+
+
+
+
+            <div class="group-image-1">
+                <img class="image" src="{{ object.image1.url }}">
+            </div>
+            {% endif %}
+
+
+            {% if object.image2 %}
+            <div class="group-image-2">
+            <img class="image" src="{{ object.image2.url }}">
+            </div>
+            {% endif %}
+
+
+            {% if object.image3 %}
+            <div class="group-image-3">
+
+            <img class="image" src="{{ object.image3.url }}">
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+    <div class="group">
+        <p>活動内容</p>
+        <div class="group-content">
+            <p>{{ object.activity_description|linebreaksbr }}</p>
+        </div>
+    </div>
+
+
+    {% if object.mood %}
+    <div class="group">
+        <p>雰囲気</p>
+        <div class="group-content">
+
+            <p>{{ object.mood|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if object.welcome_person %}
+    <div class="group">
+        <p>こんな人に来て欲しい</p>
+        <div class="group-content">
+
+            <p>{{ object.welcome_person|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="group">
+        都道府県&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {% for each_prefecture in object.prefecture.all %}
+            <div class="group-tag">
+                {{ each_prefecture.get_prefecture_display }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="group">
+        主な年代&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {% for each_generation in object.generation.all %}
+            <div class="group-tag">
+                {{ each_generation.get_generation_display }}
+            </div>
+        {% endfor %}
+    </div>
+    {% if object.min_age or object.max_age %}
+    <div class="group">
+        <p>年齢層&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+             {% if object.min_age  %}{{ object.min_age }}才{% endif %}〜{% if object.min_age %}{{ object.max_age }}才{% endif %}
+        </p>
+    </div>
+    {% endif %}
+
+    <div class="group">
+        <p>メンバー数&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+         {{ object.number_of_members }}人
+        </p>
+    </div>
+
+
+
+    {% if object.day %}
+    <div class="group">
+        <p>活動頻度</p>
+        <div class="group-content">
+
+            <p>{{ object.day|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+
+    {% if object.detail_place %}
+    <div class="group">
+        <p>主な活動場所</p>
+        <div class="group-content">
+
+            <p>{{ object.detail_place|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+
+    {% if object.sex_ratio %}
+
+        <div class="group">
+
+            <p>ジェンダー比</p>
+            <div class="group-content">
+                {{ object.sex_ratio }}
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if object.cost %}
+    <div class="group">
+        <p>会費について</p>
+        <div class="group group-content">
+            <p>{{ object.cost|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="group">
+        カテゴリー&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {% for each_category in object.category.all %}
+            <div class="group-tag">
+                {{ each_category.get_category_display }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+<div class="join-group">
+    {% if request.user.is_authenticated %}
+        {% request_user_is_in_the_group %}
+    {% else %}
+    <p class="need-signup">※ グループに参加するには会員登録が必要です。</p>
+    {% endif %}
+
+</div>
+
+
+
+<div class="user-list">
+    <h2>メンバー</h2>
+        {% for each_member in members %}
+            <div class="user">
+                <a href="{% url 'users:user_detail' pk=each_member.pk %}" class="user-link"></a> &nbsp;&nbsp;&nbsp;
+
+                <div class="user-body row">
+                    <div class="col-5 col-sm-6 col-md-3 col-lg-4 user-image-parent">
+
+                        {% if each_member.origin %}
+                            <div class="image-wrapper">
+                                <div class="image-subwrapper">
+                                    <img class="image"  src="{{ each_member.origin.url }}">
+                                    </div>
+                                </div>
+                        {% else %}
+                            <p class="no-image">No Image</p>
+
+
+                        {% endif %}
+                    </div>
+                    <div class="col-7 col-sm-6 col-md-6  offset-md-1 col-lg-6 user-sentence">
+                        <div class="name">
+                            {{ each_member.user.user_name }}
+                        </div>
+                        {% if each_member.profile %}
+                            <div class="profile">
+
+                                    {{ each_member.profile }}
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    {% if members %}
+    <a href="{% url 'group:group_member_list_for_all' group_pk=object.pk %}">メンバー一覧</a>
+    {% endif %}
+</div>
+
+
+<div class="user-list">
+    <h2>代表</h2>
+        {% for each_administrator in administrators %}
+        <div class="user">
+            <a href="{% url 'users:user_detail' pk=each_administrator.pk %}" class="user-link"></a> &nbsp;&nbsp;&nbsp;
+
+            <div class="user-body row">
+                <div class="col-5 col-sm-6 col-md-3 col-lg-4 post-image-parent">
+                    <div class="image-wrapper">
+                        <div class="image-subwrapper">
+                            {% if each_administrator.origin %}
+
+                                <img class="image"  src="{{ each_administrator.origin.url }}">
+
+                            {% else %}
+                                <p class="no-image">No Image</p>
+
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+                <div class="col-7 col-sm-6 col-md-6  offset-md-1 col-lg-6 user-sentence">
+                    <div class="name">
+                        {{ each_administrator.user.user_name }}
+                    </div>
+
+                    <div class="profile">
+                        {% if each_administrator.profile %}
+                            {{ each_administrator.profile }}
+                        {% endif %}
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% if administrators %}
+    <a href="{% url 'group:group_administrator_list_for_all' group_pk=object.pk %}">管理者一覧</a>
+    {% endif %}
+
+</div>
+
+
+
+
+<div class="post-list">
+    <h2>最近の投稿</h2>
+        {% for post in posts %}
+        <div class="post">
+            <a href="{% url 'blogs:post_detail' post_pk=post.pk %}" class="post-link"></a>
+            <div class="posted-at">
+                <small>{{ post.posted_at }}</small>
+            </div>
+
+            <div class="post-body row">
+
+
+
+                <div class="col-5 col-sm-6 col-md-3 col-lg-4 post-image-parent">
+                    {% if post.image1 %}
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+                                <img class="image"  src="{{ post.image1.url }}">
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="no-image">No Image</p>
+                     {% endif %}
+                </div>
+
+
+                <div class="col-7 col-sm-6 col-md-6  offset-md-1 col-lg-6 post-sentence">
+                    {% if post.title %}
+                    <div class="title">
+                        {{ post.title|truncatechars:30 }}
+                    </div>
+                    {% endif %}
+
+
+                    <div class="content">
+                        {{ post.content|truncatechars:30 }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% if posts %}
+        <a href="{% url 'blogs:post_list' group_pk=object.pk %}">もっと見る</a>
+        {% else %}
+        まだ投稿がありません。
+    {% endif %}
+</div>
+
+
+<div class="event-list">
+    <h2>イベント</h2>
+        {% for event in events %}
+        <div class="event">
+            <a href="{% url 'events:event_detail' event_pk=event.pk %}" class="event-link"></a>
+
+            <div class="posted-at">
+                <small>{{ event.posted_at }}</small>
+            </div>
+            <div class="post-body row">
+                <div class="col-5 col-sm-6 col-md-3 col-lg-4 post-image-parent">
+                    {% if event.image1 %}
+                       <img class="event-image"  src="{{ event.image1.url }}">
+                    {% else %}
+                        <p class="no-image">No Image</p>
+
+                    {% endif %}
+                </div>
+                <div class="col-7 col-sm-6 col-md-6  offset-md-1 col-lg-6 event-sentence">
+                        <div class="title">
+                            {{ event.title|truncatechars:30 }}
+                        </div>
+                    <div class="content">
+                        {{ event.content|truncatechars:30  }}
+                    </div>
+
+
+
+                    <div class="place">
+                        開催地&nbsp;&nbsp;:&nbsp;&nbsp;
+                            {% for each_prefecture in event.prefecture.all %}
+                                <div class="group-tag">
+                                    {{ each_prefecture }}
+                                </div>
+                            {% endfor %}
+
+                    </div>
+
+                    <div class="time">
+                        {% if event.event_end_day %}
+
+                                開催期間&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }} &nbsp;&nbsp;〜&nbsp;&nbsp; {{ event.event_end_day }}&nbsp;&nbsp;
+
+                        {% else %}
+
+                                開催日&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }}
+
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% if events %}
+        <a href="{% url 'events:event_list' group_pk=object.pk %}">もっと見る</a>
+        {% else %}
+        まだ投稿がありません。
+    {% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

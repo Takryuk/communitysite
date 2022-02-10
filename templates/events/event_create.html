@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+
+    <link rel="stylesheet" href="{% static 'css/events/event_create.css' %}">
+    <link rel="stylesheet" href="{% static 'css/image_preview.css' %}">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+
+{% endblock css %}
+
+{% block js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+<script>
+      $(function () {
+          // timedropper
+          $("#id_time").timeDropper({
+              format: "H:mm",
+              setCurrentTime: false,
+          });
+      });
+
+</script>
+
+{% endblock js %}
+
+{% block content %}
+
+
+<form action="" method="POST" enctype="multipart/form-data">
+
+    {{ form.non_field_errors }}
+
+
+    <div class="form-group group_form_field">
+        <p>{{ form.title.errors }}</p>
+        <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+    </div>
+
+    <div class="form-group group_form_field">
+        <p>{{ form.content.errors }}</p>
+        <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+        {{ form.content }}
+    </div>
+
+
+
+    <div class="group_form_field">
+        <p>{{ form.prefecture.errors }}</p>
+        <label for="{{ form.prefecture.id_for_label }}">都道府県</label><br>
+
+        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="heading1">
+                    <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#prefecture" role="button" aria-expanded="true" aria-controls="prefecture">
+                      都道府県一覧
+                    </a>
+                </div><!-- /.card-header -->
+                <div id="prefecture" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            {% for value, label in form.prefecture.field.choices  %}
+                                <div class="col-sm-3 col-6">
+                                    <ul>
+                                        <li>
+                                            <label class="checkbox-label-container"><input type="checkbox" name="prefecture" value="{{ value }}">
+                                            {{ label }}</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group group_form_field">
+        <label for="{{ form.detail_place.id_for_label }}">{{ form.detail_place.label_tag }}</label>
+        {{ form.detail_place }}
+        {{ form.detail_place.errors }}
+    </div>
+
+    <div class="form-group group_form_field">
+        <label for="{{ form.event_day.id_for_label }}">{{ form.event_day.label_tag }}</label>
+        {{ form.event_day }} &nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;〜&nbsp;&nbsp;&nbsp;&nbsp; {{ form.event_end_day }}&nbsp;&nbsp;&nbsp; まで)
+        {{ form.event_day.errors }}
+    </div>
+    <div class="form-group group_form_field">
+        <label for="{{ form.time_description.id_for_label }}">{{ form.time_description.label_tag }}</label>
+        {{ form.time_description }}
+        {{ form.time_description.errors }}
+    </div>
+
+    <div class="group_form_field">
+        {{ form.media }}
+        <label for="{{ form.image1.id_for_label }}">{{ form.image1.label_tag }}</label>
+
+        {{ form.image1 }}
+        {{ form.image1.errors }}
+    </div>
+    <div class="group_form_field">
+        <label for="{{ form.image2.id_for_label }}">{{ form.image2.label_tag }}</label>
+        {{ form.image2 }}
+        {{ form.image2.errors }}
+    </div>
+    <div class="group_form_field">
+        <label for="{{ form.image3.id_for_label }}">{{ form.image3.label_tag }}</label>
+        {{ form.image3 }}
+        {{ form.image3.errors }}
+    </div>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-lg">作成</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,14 @@
+.event-title{
+    font-size: 2.5vmax;
+    margin-bottom: 2vmax;
+}
+
+@media only screen and (max-width: 576px){
+
+    .event-title{
+        font-size: 3.5vmax;
+        margin-bottom: 2vmax;
+    }
+}
+
+

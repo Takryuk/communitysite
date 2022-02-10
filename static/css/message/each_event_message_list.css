@@ -1,0 +1,39 @@
+.event-message-header{
+    margin-top: 5vmax;
+    font-size: 2.5vmax;
+    border-bottom: 1px solid #ededed;
+}
+
+
+.header-info{
+    margin-bottom: 2vmax;
+    font-size: 1.5vmax;
+
+}
+
+
+.sent-at{
+    margin-bottom: 2vmax;
+    font-size: 1.3vmax;
+}
+
+@media only screen and (max-width: 576px){
+    .header-info{
+        margin-bottom: 2vmax;
+        font-size: 2.2vmax;
+
+    }
+
+
+    .sent-at{
+        margin-bottom: 2vmax;
+        font-size: 1.8vmax;
+    }
+
+
+    .event-message-header{
+    font-size: 4vmax;
+    }
+
+}
+

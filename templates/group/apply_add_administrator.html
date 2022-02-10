@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+<form method="post">
+    <p>{{ profile_user.user.user_name }}さんに{{ group }}の管理者に加わるよう依頼しますか？</p>
+    <div>
+        <p>{{ profile_user.user.user_name }}さんへのメッセージ（任意）</p>
+        <p>{{ form.reason }}</p>
+    </div>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">要請する</button>
+</form>
+
+{% endblock content %}

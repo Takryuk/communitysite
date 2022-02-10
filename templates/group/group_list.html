@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+{% load tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/fold_icon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/eyecatch_image.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/group/group_list.css' %}">
+
+
+{% endblock css %}
+
+{% block content %}
+<div class="header-column-wrapper">
+    <div class="header-column header-column1">
+        <a href="{% url 'group:group_list' %}" class="header-link"></a>グループ
+    </div><!--
+ --><div class="header-column header-column2">
+        <a href="{% url 'events:recent_event_list' %}" class="header-link"></a>イベント
+    </div><!--
+    --><div class="header-column header-column3">
+        <a href="{% url 'blogs:recent_post_list' %}" class="header-link"></a>ブログ
+    </div>
+</div>
+
+
+
+
+<form action="" method="GET">
+
+        <h2>グループを探す&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+
+        <div class="group_form_field">
+            <input type="text" name="search" class="form-horizontal" value="{{ search_word }}" placeholder="フリーワード">&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-sm btn-outline-secondary">検索</button>
+        </div>
+        <div class="detail-search">
+            <p>
+                <big>年代を絞り込む</big>
+            </p><hr>
+            <div class="row">
+                {% for value, label, obj in form.ge.field.choices  %}
+
+                <div class="col-sm-1 col-md-2">
+                    <label for="id_category_{{ obj.category }}">
+                        <input type="checkbox" name="ge" value="{{ obj.generation }}" class="form-horizontal" id="id_category_{{ obj.generation }}" {% is_checked obj.generation checked_generation %}>
+                        {{ label }}
+                    </label>
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <br>
+            <p>
+                <big>カテゴリーを絞り込む</big>
+            </p><hr>
+            <div class="group_form_field">
+
+
+
+
+                <div class="accordion" id="outdoor-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="outdoor_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#outdoor" role="button" aria-expanded="true" aria-controls="outdoor">
+                              アウトドア・スポーツ系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="outdoor" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#outdoor-accordion">
+                            <div class="card-body">
+
+
+                                    <div class="row">
+                                    {% for value, label, obj in form.ca.field.choices  %}
+                                    {% if obj.category_sort == '1' %}
+                                    <div class="col-sm-3 col-6">
+                                        <label for="id_category_{{ obj.category }}">
+                                            <input type="checkbox" name="ca" value="{{ obj.category }}" class="form-horizontal" id="id_category_{{ obj.category }}" {% is_checked obj.category checked_category %}>
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <br>
+                <div class="accordion" id="culture-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="culture_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#culture" role="button" aria-expanded="true" aria-controls="culture">
+                              趣味・文化系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="culture" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#culture-accordion">
+                            <div class="card-body">
+
+
+                                    <div class="row">
+                                    {% for value, label, obj in form.ca.field.choices  %}
+                                    {% if obj.category_sort == '2' %}
+                                    <div class="col-sm-3 col-6">
+                                        <label for="id_category_{{ obj.category }}">
+                                            <input type="checkbox" name="ca" value="{{ obj.category }}" class="form-horizontal" id="id_category_{{ obj.category }}" {% is_checked obj.category checked_category %}>
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="accordion" id="social-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="social_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#social" role="button" aria-expanded="true" aria-controls="social">
+                              社会・交流系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="social" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#social-accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for value, label, obj in form.ca.field.choices  %}
+                                    {% if obj.category_sort == '3' %}
+                                    <div class="col-sm-3 col-6">
+                                        <label for="id_category_{{ obj.category }}">
+                                            <input type="checkbox" name="ca" value="{{ obj.category }}" class="form-horizontal" id="id_category_{{ obj.category }" {% is_checked obj.category checked_category %}>
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>
+                <big>都道府県を絞り込む</big>
+            </p><hr>
+
+            <div class="group_form_field">
+
+                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#prefecture" role="button" aria-expanded="true" aria-controls="prefecture">
+                              都道府県一覧
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="prefecture" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for value, label in form.pr.field.choices  %}
+                                        <div class="col-sm-3 col-6">
+                                            <ul>
+                                                <li>
+                                                    <label class="checkbox-label-container"><input type="checkbox" name="pr" value="{{ value }}" {% is_checked value checked_prefecture %} >
+                                                    {{ label }}</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</form>
+
+
+
+
+<div class="group-list">
+    <h2>グループ一覧</h2>
+
+        {% for group in group_list %}
+        <div class="group">
+            <a href="{% url 'group:group_detail' group_pk=group.pk %}" class="group-link"></a>
+            <div class="group-body row">
+            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 ">
+                <div class="group-header">
+                    {% for generation in group.generation.all %}
+                    {% if generation.id == 1 %}
+                        <div class="generation generation1">
+                            {{ generation }}
+                        </div>
+                    {% endif %}
+                    {% if generation.id == 2 %}
+                        <div class="generation generation2">
+                            {{ generation }}
+                        </div>
+                    {% endif %}
+
+                    {% if generation.id == 3 %}
+                        <div class="generation generation3">
+                            {{ generation }}
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if group.image1 %}
+
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+                                <img class="image"  src="{{ group.image1.url }}">
+                            </div>
+                        </div>
+                {% endif %}
+            </div>
+
+
+                <div class="col-xs-12 col-sm-6 col-md-6  col-lg-6 sentence">
+                    <div class="title">
+                        {{ group.name }}
+                    </div>
+
+                    <div class="subtitle">
+                        {% if group.subtitle %}
+                            {{ group.subtitle }}
+                        {% endif %}
+                    </div>
+                    <div class="prefecture">
+                        {% for prefecture in group.prefecture.all %}
+                        <div class="prefecture-body">
+                        {{ prefecture }}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+
+
+{% if group_list %}
+    {% include 'pagination.html' %}
+{% else %}
+    まだグループがありません。
+{% endif %}
+
+
+
+
+{% endblock content %}

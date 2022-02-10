@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load message_tags %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+
+
+<h1><a href="{% url 'group:group_detail' group_pk=group_apply_messages.first.group.pk %}">{{  group_apply_messages.first.group.name }}</a></h1>
+
+
+    <div class="message-list">
+        <h3>グループ参加申請</h3>
+        {% for group_apply_message in group_apply_messages %}
+            <div class="message">
+
+
+                <div class="message-header">
+                    <span>
+                        {% autoescape off %}
+                            {% has_read_group_apply_message group_apply_message %}
+                        {% endautoescape %}
+                    </span>
+                    <small class="sent-at">{{ group_apply_message.sent_at }}</small>
+                </div>
+
+                <div class="message-body">
+                    <div class="content">
+                        <a href="{% url 'users:user_detail' pk=group_apply_message.applied_user.pk %}">{{ group_apply_message.applied_user.user.user_name }}</a>さんが、グループ{{ group_apply_message.group.name }}に参加申請をしました。
+                    </div><br>
+                    {% if not group_apply_message.applied_user in group_apply_message.group.member.all %}
+                        <a href="{% url 'group:approve_user' group_pk=group_apply_message.group.pk user_pk=group_apply_message.applied_user.id %}">承認・非承認</a>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+        {% if group_apply_messages %}
+            {% include 'pagination.html' %}
+        {% else %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+
+
+
+{% endblock %}

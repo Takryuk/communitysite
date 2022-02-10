@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/image_preview.css' %}">
+<link rel="stylesheet" href="{% static 'css/blogs/post_create.css' %}">
+{% endblock css %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.media }}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    <div class="form-group group_form_field">
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        {{ field }}
+        {{ field.errors }}
+    </div>
+    {% endfor %}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-lg">新規投稿</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><a href="{% url 'group:group_detail' pk=group.pk %}">{{ group.name }}</a></h1>
+
+
+    <div>
+        <p>{{ object.user.user_name }}</p>
+    </div>
+    <div>
+        <p>{{ object.comment }}</p>
+    </div>
+    <hr>
+    <div>
+        <p>{{ object.commented_at }}</p>
+    </div>
+
+
+{% endblock %}

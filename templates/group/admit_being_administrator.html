@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <div class="'checkbox">
+        <p>
+            {{ group.name }}の管理者となることを承諾しますか？
+        </p>
+
+
+                    {{ form.choice }} {{ form.choice.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-success btn-lg" >送信</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load event_tags %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+<big>イベント</big>
+<h1>『<a href="{% url 'events:event_detail' event_pk=event_comments.first.event.pk %}">{{ event_comments.first.event.title }}</a>』</h1>へのコメント
+
+
+    <div class="message-list">
+        <h3>コメント一覧</h3>
+        {% for comment in event_comments %}
+            <div class="message">
+                <div class="message-header">
+                        グループ &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{{ comment.event.posted_group.name }}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>
+                        {% autoescape off %}
+                            {% has_read request comment %}
+                        {% endautoescape %}
+                        </span>
+                    <small class="sent-at">{{ comment.commented_at }}</small>
+
+                </div>
+
+
+                <div class="message-body">
+                    <div class="content">
+                        ユーザー&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<a href="{% url 'users:user_detail' pk=comment.user.pk %}">{{ comment.user.user.user_name|truncatechars:15 }}</a><br><br>
+                        {{ comment.comment }}
+                    </div><br>
+                </div>
+                <a href="{% url 'events:event_detail' event_pk=event_comments.first.event.pk %}">コメントをみる</a>
+            </div>
+
+
+        {% endfor %}
+
+        {% if event_comments %}
+            {% include 'pagination.html' %}
+        {% else %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/users/profile_change.css' %}">
+    <link rel="stylesheet" href="{% static 'css/image_preview.css' %}">
+
+{% endblock css %}
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+
+    <div class="group_form_field">
+        {{ form.media }}
+        <p>{{ form.origin.errors }}</p>
+        <label for="{{ form.origin.id_for_label }}">{{ form.origin.label }}</label><br>
+        {{ form.origin }}
+
+    </div>
+
+    <div class="group_form_field">
+        <p>{{ form.profile.errors }}</p>
+        <label for="{{ form.profile.id_for_label }}">{{ form.profile.label }}</label><br>
+        {{ form.profile }}
+    </div>
+        <div class="group_form_field">
+        <p>{{ form.age.errors }}</p>
+        <label for="{{ form.age.id_for_label }}">{{ form.age.label }}</label><br>
+        {{ form.age }}&nbsp;&nbsp;&nbsp;&nbsp;歳
+    </div>
+    <div class="group_form_field">
+        <p>{{ form.sex.errors }}</p>
+        <label for="{{ form.sex.id_for_label }}">{{ form.sex.label }}</label><br>
+        {{ form.sex }}
+    </div>
+
+    <div class="group_form_field">
+        <p>{{ form.twitter_link.errors }}</p>
+        <label for="{{ form.twitter_link.id_for_label }}">{{ form.twitter_link.label }}</label><br>
+        {{ form.twitter_link }}
+    </div>
+    <div class="group_form_field">
+        <p>{{ form.facebook_link.errors }}</p>
+        <label for="{{ form.facebook_link.id_for_label }}">{{ form.facebook_link.label }}</label><br>
+        {{ form.facebook_link }}
+    </div>
+    <div class="group_form_field">
+        <p>{{ form.instagram_link.errors }}</p>
+        <label for="{{ form.instagram_link.id_for_label }}">{{ form.instagram_link.label }}</label><br>
+        {{ form.instagram_link }}
+    </div>
+
+
+
+
+
+
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">送信</button>
+</form>
+
+{% endblock %}

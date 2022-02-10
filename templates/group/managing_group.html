@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>管理グループ</h2>
+<h2><a href="{% url 'group:group_detail' group_pk=group.pk %}">{{ group.name }}</a></h2><hr>
+
+<div>
+
+    <p><a href="{% url 'group:update_group' group_pk=group.pk %}">グループのプロフィールを編集する</a></p>
+    <p><a href="{% url 'message:create_inner_group_message' group_pk=group.pk %}">メンバーにメッセージを送信する</a></p>
+    <p><a href="{% url 'group:group_member_list' group_pk=group.pk  %}">メンバーの削除・管理者要請</a></p>
+    {% if group.recruit_member %}
+    <p><a href="{% url 'group:stop_recruiting_member' group_pk=group.pk %}">メンバー募集を停止</a></p>
+    {% else %}
+    <p><a href="{% url 'group:stop_recruiting_member' group_pk=group.pk %}">メンバー募集を再開</a></p>
+    {% endif %}
+    <h2>ブログ</h2><hr>
+    <p><a href="{% url 'blogs:post_list' group_pk=group.pk %}">投稿一覧</a></p>
+ <p><a href="{% url 'blogs:create_post' group_pk=group.pk %}">ブログの新規投稿</a></p>
+    <h2>イベント</h2><hr>
+    <p><a href="{% url 'events:event_list' group_pk=group.pk %}">主催イベント一覧</a></p>
+ <p><a href="{% url 'events:create_event' group_pk=group.pk %}">イベントの新規作成</a></p>
+
+
+<p><a href="{% url 'group:delete_group' group_pk=group.pk %}">グループを削除する</a></p>
+
+</div>
+
+
+
+
+{% endblock content %}

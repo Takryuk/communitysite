@@ -1,0 +1,4 @@
+{% if is_in_administrator %}
+<p><a href="{% url 'group:admit_being_administrator' user_pk=admin_message.user.pk group_pk=admin_message.group.pk %}" >管理者要請を承諾</a></p>
+{% else %}
+{% endif %}

@@ -1,0 +1,176 @@
+#admin-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-down */
+  float: right;
+}
+#admin-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+
+
+#event-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-down */
+  float: right;
+}
+
+
+#event-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+
+
+#inner-group-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-up */
+  float: right;
+}
+
+#inner-group-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+
+#group-apply-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-up */
+  float: right;
+}
+
+#group-apply-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+
+#event-join-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-up */
+  float: right;
+}
+
+#event-join-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+#event-comment-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-up */
+  float: right;
+}
+
+#event-comment-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+#post-comment-message-accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-up */
+  float: right;
+}
+
+#post-comment-message-accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+.accordion{
+    width: 80%;
+    margin-bottom: 3vmax;
+}
+
+.card-body{
+    border-bottom:1px solid rgba(0, 0, 0, .125);
+
+}
+
+
+.message-list{
+    margin-top: 3vmax;
+
+}
+
+
+
+.message-list h2{
+    margin-bottom: 30px;
+}
+
+
+
+.message{
+    margin-bottom: 2vmax;
+    padding: 3% 5% 3% 5%;
+    background-color: #ededed;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .25);
+
+}
+
+
+.message-header{
+    margin-bottom: 2vmax;
+    border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+
+.message-body{
+    margin-top: 1vmax;
+}
+
+.reason{
+    margin-top: 1vmax;
+}
+
+.become-administrator{
+    margin-top: 1vmax;
+}
+
+
+
+.event-message-title{
+    font-size: 2vmax;
+}
+
+
+@media only screen and (max-width: 576px){
+    .accordion{
+        width: 100%;
+        margin-bottom: 4vmax;
+    }
+
+
+    .event-message-title{
+        font-size: 4vmax;
+    }
+
+}
+

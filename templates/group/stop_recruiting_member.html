@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>グループ「{{ group.name }}」の新規メンバーの募集を停止しますか？</p>
+    <input type="hidden" name="delete_complete" value="delete_complete">
+    <button type="submit" class="btn btn-danger">停止する</button>
+</form>
+{% endblock content %}

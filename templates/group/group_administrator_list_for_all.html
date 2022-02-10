@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{%  load tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/eyecatch_image.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/group/group_member_list_for_all.css' %}">
+
+{% endblock css %}
+
+
+{% block content %}
+
+
+<div class="group">
+        <h1>{{ group.name }}</h1>の管理者一覧
+</div>
+
+
+
+<div class="user-list">
+        {% for each_member in members %}
+            <div class="user">
+                <a href="{% url 'users:user_detail' pk=each_member.pk %}" class="user-link"></a> &nbsp;&nbsp;&nbsp;
+
+                <div class="user-body row">
+                    <div class="col-5 col-sm-6 col-md-3 col-lg-4 user-image-parent">
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+
+                                {% if each_member.origin %}
+                                    <img class="image"  src="{{ each_member.origin.url }}">
+
+                                {% else %}
+                                    <p class="no-image">No Image</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-6 col-md-6  offset-md-1 col-lg-6 user-sentence">
+                        <div class="name">
+                            {{ each_member.user.user_name }}
+                        </div>
+                        {% if each_member.profile %}
+                            <div class="profile">
+
+                                    {{ each_member.profile }}
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    {%  include 'pagination.html' %}
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

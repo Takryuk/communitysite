@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/eyecatch_image.css' %}">
+    <link rel="stylesheet" href="{% static 'css/events/event_join_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/events/recent_event_list.css' %}">
+
+{% endblock css %}
+
+
+{% block content %}
+
+<div class="header-column-wrapper">
+    <div class="header-column header-column1">
+        <a href="{% url 'group:group_list' %}" class="header-link"></a>グループ
+    </div><!--
+ --><div class="header-column header-column2">
+        <a href="{% url 'events:recent_event_list' %}" class="header-link"></a>イベント
+    </div><!--
+    --><div class="header-column header-column3">
+        <a href="{% url 'blogs:recent_post_list' %}" class="header-link"></a>ブログ
+    </div>
+</div>
+
+
+
+
+
+
+<div class="event-list">
+    <h2>近日中のイベント</h2>
+        {% for event in events %}
+        <div class="event-wrapper">
+            <div class="event">
+                <a href="{% url 'events:event_detail' event_pk=event.pk %}" class="event-link"></a>
+                    <div class="posted-at">
+                        <small>{{ event.posted_at }}</small>
+                    </div>
+                <div class="event-body row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4 ">
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+                                {% if event.image1 %}
+                                    <img class="image"  src="{{ event.image1.url }}">
+                                {% else %}
+                                    <p class="no-image">No Image</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6  offset-md-1 col-lg-6 post-sentence">
+                        <div class="group">
+                            グループ&nbsp;&nbsp;&nbsp;{{ event.posted_group.name }}
+                        </div>
+                        {% if event.title %}
+                        <div class="title">
+                            {{ event.title }}
+                        </div>
+                        {% endif %}
+
+
+                        <div class="content">
+                            {{ event.content|truncatechars:30 }}
+                        </div>
+
+
+                        <div class="place">
+                            開催地&nbsp;&nbsp;:&nbsp;&nbsp;
+                                {% for each_prefecture in event.prefecture.all %}
+                                    <div class="tag">
+                                        {{ each_prefecture }}
+                                    </div>
+                                {% endfor %}
+
+                        </div>
+
+                        <div class="time">
+                            {% if event.event_end_day %}
+
+                                    開催期間&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }} &nbsp;&nbsp;〜&nbsp;&nbsp; {{ event.event_end_day }}&nbsp;&nbsp;
+
+                            {% else %}
+
+                                    開催日&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }}
+
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
+    {% if events %}
+        {% include 'pagination.html' %}
+    {% else %}
+        近日中のイベントはありません。
+    {% endif %}
+</div>
+
+
+
+
+
+
+{% endblock %}

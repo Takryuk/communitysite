@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load message_tags %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+グループ
+<h1><a href="{% url 'group:group_detail' group_pk=group.pk %}">{{ group.name }}</a></h1>
+のメッセージ
+
+<div class="message-list">
+    {% for message in messages %}
+        <div class="message">
+
+
+            <div class="message-header">
+                <span>
+                    {% if message.title %}
+                        {{ message.title }}
+                    {% endif %}
+
+
+                        {% autoescape off %}
+                            {% has_read_inner_group_message request message %}
+                        {% endautoescape %}
+
+                </span>
+                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ message.sent_at }}</small>
+            </div>
+
+            <div class="message-body">
+                <div class="content">
+                    {{ message.content|linebreaksbr|truncatechars:30 }}
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+    {% if messages %}
+        {% include 'pagination.html' %}
+    {% else %}
+        <p>（メッセージはありません。）</p>
+    {% endif %}
+</div>
+
+
+
+
+
+{% endblock %}

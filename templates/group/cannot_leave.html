@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<p>{{ group.name }}は管理者があなたしかいません。<br>
+
+<p>グループ退会前に管理者を他のメンバーに託してください。<br>
+    もしくは、{{ group.name }}を全て削除しても良い場合は、以下のリンクからグループを退会することができます。</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="delete">
+    <button type="submit" class="btn btn-danger">退会ページ</button>
+</form>
+{% endblock %}

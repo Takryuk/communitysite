@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+<p>{% if profile_user.user.user_name  %}{{ profile_user.user.user_name }}{% else %}あなた{% endif %}は既にグループ名『{{ group.name }}』の管理者です。<p>
+{% endblock content %}
+

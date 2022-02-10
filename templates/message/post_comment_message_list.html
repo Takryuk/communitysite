@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% load message_tags %}
+
+<h2>ブログコメント</h2>
+{% for post_comment_message in post_comment_messages %}
+        {% autoescape off %}
+            {% has_read_post_comment_message post_comment_message %}
+        {% endautoescape %}
+
+        <h3>{{ post_comment_message.comment.event.title }}</h3>
+
+        <div>
+            <p>{{ post_comment_message.comment.commented_at }}</p>
+        </div>
+
+        <div>
+            <p>{{ post_comment_message.comment.comment }}</p>
+        </div>
+
+
+{% endfor %}
+
+
+{% if has_read_event_messages %}
+    {% include 'pagination.html' %}
+{% else %}
+    <p>（メッセージはありません。）</p>
+{% endif %}
+
+
+
+{%  endblock content %}

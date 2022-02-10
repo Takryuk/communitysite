@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/events/event_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/eyecatch_image.css' %}">
+
+{% endblock css %}
+
+
+{% block content %}
+
+
+
+
+
+<div class="group group-title">
+
+    <a href="{% url 'group:group_detail' group_pk=group.pk %}" class="group-link"></a>
+    <h1>{{ group.name }}</h1>
+</div>
+
+
+<div class="header-column-wrapper">
+    <div class="header-column header-column1">
+        <a href="{% url 'group:group_detail' group_pk=group.pk %}" class="header-link"></a>グループ
+    </div><!--
+ --><div class="header-column header-column2">
+        <a href="{% url 'events:event_list' group_pk=group.pk %}" class="header-link"></a>イベント
+    </div><!--
+    --><div class="header-column header-column3">
+        <a href="{% url 'blogs:post_list' group_pk=group.pk %}" class="header-link"></a>ブログ
+    </div>
+</div>
+
+
+<div class="event-list">
+    <h2>投稿一覧</h2>
+        {% for event in events %}
+        <div class="event-wrapper">
+            <div class="event">
+                <a href="{% url 'events:event_detail' event_pk=event.pk %}" class="event-link"></a>
+                    <div class="posted-at">
+                        <small>{{ event.posted_at }}</small>
+                    </div>
+                <div class="event-body row">
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-4 post-image-parent">
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper no-image">
+                                {% if event.image1 %}
+                                    <img class="image"  src="{{ event.image1.url }}">
+                                {% else %}
+                                No Image
+
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6  offset-md-1 col-lg-6 post-sentence">
+                        {% if event.title %}
+                        <div class="title">
+                            {{ event.title }}
+                        </div>
+                        {% endif %}
+
+
+                        <div class="content">
+                            {{ event.content|linebreaksbr|truncatechars:200 }}
+                        </div>
+
+
+                        <div class="place">
+                            開催地&nbsp;&nbsp;:&nbsp;&nbsp;
+                                {% for each_prefecture in event.prefecture.all %}
+                                    <div class="tag">
+                                        {{ each_prefecture }}
+                                    </div>
+                                {% endfor %}
+
+                        </div>
+
+                        <div class="time">
+                            {% if event.event_end_day %}
+
+                                    開催期間&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }} &nbsp;&nbsp;〜&nbsp;&nbsp; {{ event.event_end_day }}&nbsp;&nbsp;
+
+                            {% else %}
+
+                                    開催日&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }}
+
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% if is_administrator %}
+                <span class="clearfix">
+                    <a class="update" href="{% url 'events:update_event' pk=event.pk %}">更新</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="delete" href="{% url 'events:delete_event' pk=event.pk %}">削除</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="message-create" href="{% url 'message:create_event_message' event_pk=event.pk %}">イベントメッセージ作成</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="message-list" href="{% url 'message:event_message_list_for_host' event_pk=event.pk %}">イベントメッセージ一覧</a>
+                </span>
+            {% endif %}
+        </div>
+
+
+
+        {% endfor %}
+    {% if events %}
+        {% include 'pagination.html' %}
+    {% else %}
+        まだ投稿がありません。
+    {% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% if recruiting_member %}
+    {% if not request_user_is_in_the_group %}
+    <a href="{% url 'group:group_join' group_pk=object.pk %}" class="btn btn-success join-group">グループへの参加申請</a>
+
+    {% endif %}
+
+{% else %}
+    （現在メンバーを募集しておりません。）
+{% endif %}

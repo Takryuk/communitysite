@@ -1,0 +1,119 @@
+.container{
+    width: 40%;
+}
+
+
+.user-img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+
+.user-image-wrapper {
+    position: relative;
+    width: 100%;
+}
+.user-image-wrapper:before {
+    content:"";
+    display: block;
+    padding-top: 62.5%; /* 高さを幅の75%に固定 */
+    margin: 3vmax;
+}
+.user-image-subwrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.no-image{
+    font-size: 3vmax;
+    color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    line-height: 750%;
+
+}
+
+
+h1{
+    margin-bottom: 3vmax;
+
+}
+
+.base-info{
+    margin-bottom: 3vmax;
+}
+
+.user-profile-wrapper{
+    margin-bottom: 1vmax;
+    border-bottom: 1px solid #ededed;
+    width: 100%;
+}
+
+.no-profile{
+    margin-top: 2vmax;
+    margin-bottom: 3vmax;
+
+}
+.user-profile{
+    width: 100%;
+    margin-top: 1vmax;
+    margin-bottom: 3vmax;
+    background-color: #ededed;
+    padding: 2vmax 0 2vmax 2vmax;
+    border-radius: 10px;
+    box-shadow: 2px  2px 2px rgba(0,0,0,0.3);
+
+}
+
+
+.user-link{
+    margin-bottom: 1vmax;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+}
+@media only screen and (max-width: 576px){
+
+    .container{
+        width: 100%;
+    }
+
+    .user-image-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .no-image{
+        font-size: 3vmax;
+        color: rgba(0, 0, 0, 0.2);
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        line-height: 1000%;
+
+    }
+
+
+
+    .user-profile-wrapper{
+        width: 100%;
+        border-bottom: 1px solid #ededed;
+
+    }
+
+    .user-profile{
+        width: 100%;
+        background-color: #ededed;
+        padding: 2vmax 0 2vmax 2vmax;
+        border-radius: 10px;
+        box-shadow: 2px  2px 2px rgba(0,0,0,0.3);
+
+    }
+
+
+}

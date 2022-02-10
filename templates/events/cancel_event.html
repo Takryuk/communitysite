@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>イベント名:&nbsp;&nbsp;&nbsp;&nbsp;{{ event.title }}&nbsp;&nbsp;&nbsp;への参加をキャンセルしますか？</p>
+    <input type="hidden" name="delete_complete" value="delete_complete">
+    <button type="submit" class="btn btn-danger">キャンセルする</button>
+</form>
+{% endblock content %}

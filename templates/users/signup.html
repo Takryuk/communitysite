@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>ユーザー登録</h1><br><br>
+<form action="" method="POST">
+    {{ form.non_field_errors }}
+    <table class="table">
+        <tbody>
+            {% for field in form %}
+                <tr>
+                    <th><label for="{{ field.id_for_label }}">{{ field.label }}</label></th>
+                    <td>{{ field }} {{ field.errors }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>※&nbsp;&nbsp;&nbsp;<a href="{% url 'users:terms_of_service' %}">利用規約</a>・<a href="{% url 'users:privacy_policy' %}">プライバシーポリシー</a>に同意の上、登録をお願いします。</p><br>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg" >登録</button>
+</form>
+{% endblock content %}

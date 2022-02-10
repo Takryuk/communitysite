@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><a href="{% url 'users:user_detail' pk=user_profile.pk %}">{{ user_profile.user.user_name }}さん</a></h2><hr>
+
+<div><p><a href="{% url 'message:message_list' %}">最近のメッセージ</a></p></div>
+<div>
+
+    <p><a href="{% url 'users:profile_change' pk=user_profile.pk %}">プロフィールを編集する</a></p>
+    <p><a href="{% url 'users:username_change' pk=user_profile.pk %}">ニックネームを変更する</a></p>
+
+
+
+    <p><a href="{% url 'users:password_change' %}">パスワードを変更する</a></p>
+    <p><a href="{% url 'users:email_change' %}">メールアドレスを変更する</a></p>
+    <p><a href="{% url 'events:event_join_list' %}">参加したイベント</a></p>
+
+    <p><a href="{% url 'users:delete_account' %}">退会する</a></p>
+</div>
+
+
+
+
+{% endblock content %}

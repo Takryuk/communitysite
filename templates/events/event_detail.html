@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/events/event_detail.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+    {% if event.image1 or event.image2 or event.image3 %}
+
+        <div class="event-image-list">
+
+            {% if event.image1 %}
+            <div class="event-image1">
+                <img class="image"  src="{{ event.image1.url }}">
+            </div>
+            {% endif %}
+
+
+            {% if event.image2 %}
+            <div>
+
+                <img class="image"  src="{{ event.image2.url }}">
+            </div>
+            {% endif %}
+
+
+            {% if event.image3 %}
+                <div>
+                    <img class="image" src="{{ event.image3.url }}">
+                </div>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="group">
+        <div class="group-title">
+            <h1><a href="{% url 'group:group_detail' event.posted_group.pk %}">{{ event.posted_group.name }}</a></h1>
+        </div>
+
+    </div>
+
+
+
+    <div class="event-title">
+        <span class="event-title-label">イベント</span>&nbsp;&nbsp;&nbsp;<small class="event-posted-at">投稿日&nbsp;&nbsp;&nbsp;{{ event.posted_at }}</small>
+        <div class="event-title-body">
+            <big>{{ event.title|linebreaksbr }}</big>
+        </div>
+    </div>
+
+
+
+    <div class="event-about">
+        <p>イベントについて</p>
+        <div class="event-content">
+            <p>{{ event.content|linebreaksbr }}</p>
+        </div>
+    </div>
+
+
+    <div class="event event-prefecture">
+        都道府県&nbsp;&nbsp;&nbsp;&nbsp;:
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {% for each_prefecture in event.prefecture.all %}
+            <div class="event-tag">
+                {{ each_prefecture }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+
+    <div class="event event-day">
+        {% if event.event_end_day %}
+
+                開催期間&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }} &nbsp;&nbsp;〜&nbsp;&nbsp; {{ event.event_end_day }}&nbsp;&nbsp;
+
+        {% else %}
+
+                開催日&nbsp;&nbsp;:&nbsp;&nbsp;{{ event.event_day }}
+
+        {% endif %}
+    </div>
+
+
+    <div class="event-about">
+        <p>詳細な活動場所</p>
+        <div class="event-content">
+            <p>{{ event.detail_place|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% if event.time_description %}
+    <div class="event-about">
+        <p>開催日時の補足情報</p>
+        <div class="event-content">
+            <p>{{ event.time_description|linebreaksbr }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+{% if user.is_authenticated %}
+<div class="join-event">
+    <a class="btn btn-success" href="{% url 'events:event_join' event_pk=event.pk %}">イベントに参加</a>
+</div>
+{% endif %}
+
+<div>
+
+
+
+    {% if user.is_authenticated %}
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">コメントする</button>
+        </form>
+    {% endif %}
+
+    <h2>コメント</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <span class="comment-user">
+                <a href="{% url 'users:user_detail' pk=comment.user.pk %}" class="user-link">
+                    &nbsp;{{ comment.user.user.user_name }}
+                </a>
+            </span>
+            <small>&nbsp;&nbsp;&nbsp;{{ comment.commented_at }}</small>
+            <p>{{ comment.comment|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+    {% if not comments %}
+    <p>まだコメントはありません。</p>
+    {% endif %}
+</div>
+
+
+
+
+{% endblock %}

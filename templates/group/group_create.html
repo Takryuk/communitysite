@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/group/create_group.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fold_icon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/image_preview.css' %}">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+{% endblock css %}
+
+{%  block js %}
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"></script>
+{% endblock js %}
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+        <h2>グループ紹介</h2>
+
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            {% if forloop.counter < 7 %}
+                <div class="form-group group_form_field">
+                    <p>{{ field.errors }}</p>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="group_form_field">
+            <p>{{ form.number_of_members.errors }}</p>
+            <label for="{{ form.number_of_members.id_for_label }}">{{ form.number_of_members.label }}&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</label>
+            {{ form.number_of_members }}
+        </div>
+        <div class="group_form_field">
+            <p>{{ form.max_age.errors }}</p>
+            年齢層&nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp; {{ form.max_age }}&nbsp;才〜{{ form.min_age }}&nbsp;才
+        </div>
+        <div class="group_form_field">
+            <p>{{ form.cost.errors }}</p>
+            <label for="{{ form.cost.id_for_label }}">{{ form.cost.label }}&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</label>{{ form.cost }}
+        </div>
+        <div class="group_form_field">
+            <p>{{ form.day.errors }}</p>
+            <label for="{{ form.day.id_for_label }}">{{ form.day.label }}</label><br>
+            {{ form.day }}
+        </div>
+        <div class="group_form_field">
+            <p>{{ form.founded_date.errors }}</p>
+            <label for="{{ form.founded_date.id_for_label }}">{{ form.founded_date.label }}&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</label>
+            {{ form.founded_date }}
+        </div>
+
+
+
+            <div class="group_form_field">
+                <p>{{ form.prefecture.errors }}</p>
+                <label for="{{ form.prefecture.id_for_label }}">都道府県</label><br>
+                <p><small>※ &nbsp;{{ form.prefecture.help_text }}</small></p>
+
+                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#prefecture" role="button" aria-expanded="true" aria-controls="prefecture">
+                              都道府県一覧
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="prefecture" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for value, label, obj in form.prefecture.field.choices  %}
+                                        <div class="col-sm-3 col-6">
+                                            <ul>
+                                                <li>
+                                                    <label class="checkbox-label-container"><input type="checkbox" name="prefecture" value="{{ obj.id }}" {% is_checked obj.id checked_prefecture %} >
+                                                    {{ label }}</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        <div class="form-group group_form_field">
+            <p>{{ form.detail_place.errors }}</p>
+            <label for="{{ form.detail_place.id_for_label }}">{{ form.detail_place.label }}</label>
+            {{ form.detail_place }}
+        </div>
+
+
+
+
+            <div class="group_form_field">
+                <p>{{ form.generation.errors }}</p>
+                <label for="{{ form.generation.id_for_label }}">年代</label><br>
+                <p><small>※ &nbsp;{{ form.generation.help_text }}</small></p>
+                <div class="generation-choices">{{ form.generation }}</div>
+            </div>
+
+        <div class="group_form_field">
+
+
+                {{ form.category.errors }}
+
+                <label for="">サークルのカテゴリー</label><br>
+            <p><small>※ &nbsp;1~5個</small></p>
+
+
+
+
+                <div class="accordion" id="outdoor-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="outdoor_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#outdoor" role="button" aria-expanded="true" aria-controls="outdoor">
+                              アウトドア・スポーツ系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="outdoor" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#outdoor-accordion">
+                            <div class="card-body">
+
+
+                                    <div class="row">
+                                        {% for value, label, obj in form.category.field.choices  %}
+                                            {% if obj.category_sort == '1' %}
+                                            <div class="col-sm-3 col-6">
+                                                <label for="id_category_{{ obj.category }}">
+                                                    <input type="checkbox" name="category" value="{{ obj.id }}" class="form-horizontal" id="id_category_{{ obj.category }}" {% is_checked obj.id checked_category %}>
+                                                    {{ label }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+    <br>
+                <div class="accordion" id="culture-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="culture_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#culture" role="button" aria-expanded="true" aria-controls="culture">
+                              趣味・文化系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="culture" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#culture-accordion">
+                            <div class="card-body">
+
+
+                                    <div class="row">
+                                        {% for value, label, obj in form.category.field.choices  %}
+                                            {% if obj.category_sort == '2' %}
+                                            <div class="col-sm-3 col-6">
+                                                <label for="id_category_{{ obj.category }}">
+                                                    <input type="checkbox" name="category" value="{{ obj.id }}" class="form-horizontal" id="id_category_{{ obj.category }}" {% is_checked obj.id checked_category %}>
+                                                    {{ label }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <br>
+
+                <div class="accordion" id="social-accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="social_heading1">
+                            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#social" role="button" aria-expanded="true" aria-controls="social">
+                              社会・交流系
+                            </a>
+                        </div><!-- /.card-header -->
+                        <div id="social" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#social-accordion">
+                            <div class="card-body">
+
+
+                                    <div class="row">
+                                        {% for value, label, obj in form.category.field.choices  %}
+                                            {% if obj.category_sort == '3' %}
+                                            <div class="col-sm-3 col-6">
+                                                <label for="id_category_{{ obj.category }}">
+                                                    <input type="checkbox" name="category" value="{{ obj.id }}" class="form-horizontal" id="id_category_{{ obj.category }}" {% is_checked obj.id checked_category %}>
+                                                    {{ label }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="group_form_field">
+            <label for="{{ form.last_comment.id_for_label }}">{{ form.last_comment.label }}</label><br>
+            {{ form.last_comment }}
+        </div>
+
+
+
+        <h2>グループ画像</h2>
+        <div class="group_form_field">
+            {{ form.media }}
+            <p>{{ form.image1.errors }}</p>
+            <label for="{{ form.image1.id_for_label }}">{{ form.image1.label }}</label><br>
+            {{ form.image1 }}
+        </div>
+
+        <div class="group_form_field">
+                    <p>{{ form.image2.errors }}</p>
+            <label for="{{ form.image2.id_for_label }}">{{ form.image2.label }}</label><br>
+            {{ form.image2 }}
+        </div>
+
+        <div class="group_form_field">
+                    <p>{{ form.image3.errors }}</p>
+            <label for="{{ form.image3.id_for_label }}">{{ form.image3.label }}</label><br>
+            {{ form.image3 }}
+        </div>
+
+
+
+
+
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">送信</button>
+
+</form>
+
+{% endblock %}

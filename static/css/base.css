@@ -1,0 +1,15 @@
+.container{
+ margin-top: 3vmax;
+ margin-bottom: 3vmax;
+}
+
+h1{
+    font-size: 3vmax;
+}
+
+@media only screen and (max-width: 576px){
+   h1{
+    font-size: 5vmax;
+}
+
+}

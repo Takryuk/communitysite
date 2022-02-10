@@ -1,0 +1,483 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load message_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/fold_icon.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+
+<div class="accordion" id="admin-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="admin-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#admin-message" role="button" aria-expanded="true" aria-controls="admin-message">
+              <big>一般メッセージ</big>
+                {% if admin_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ admin_messages_count }}件
+                {% endif %}
+            </a>
+        </div><!-- /.card-header -->
+        <div id="admin-message" class="collapse" role="tabpanel" aria-labelledby="admin-message-heading1" data-parent="#admin-message-accordion">
+            <div class="card-body">
+
+                <div class="message-list">
+                        {% for admin_message in admin_messages %}
+                        <div class="message">
+                            {% if admin_message.administrator %}
+                                <div class="message-header">
+                                    <span>管理者追加のお知らせ
+                                        {% if not admin_message.has_read %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                        {% endif %}
+                                    </span>
+                                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ admin_message.sent_at }}</small>
+                                </div>
+
+                                <div class="message-body">
+
+                                    <div class="content">
+                                        グループ{{ admin_message.group.name }}の管理者、{{ admin_message.administrator.user.user_name }}さんがあなたに{{ admin_message.group.name }}の管理者になるよう依頼しました。
+                                    </div>
+
+                                    {% if admin_message.reason %}
+                                    <div class="reason">
+                                        要請理由: &nbsp;&nbsp;&nbsp;&nbsp;{{  admin_message.reason }}
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="become-administrator">
+                                        {% is_before_administrator %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="message-header">
+                                    <span>
+                                        {% if admin_message.title %}
+                                            {{ admin_message.title }}
+                                        {% endif %}
+
+                                        {% if not admin_message.has_read %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                        {% endif %}
+                                    </span>
+                                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ admin_message.sent_at }}</small>
+                                </div>
+
+                                <div class="message-body">
+
+                                    <div class="content">
+                                        {{ admin_message.content|linebreaksbr|truncatechars:30 }}
+                                    </div>
+
+
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+                        {% endfor %}
+
+                    {% if admin_messages %}
+                        <p><a href="{% url 'message:admin_message_list' %}">もっと見る</a></p>
+                    {% else %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="accordion" id="event-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="event-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#event-message" role="button" aria-expanded="true" aria-controls="event-message">
+                <big>イベントメッセージ</big>
+                {% if has_read_event_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ has_read_event_messages_count }}件
+                {% endif %}
+            </a>
+        </div><!-- /.card-header -->
+        <div id="event-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#event-message-accordion">
+            <div class="card-body">
+
+
+                <div class="message-list">
+                    {% for has_read_event_message in has_read_event_messages %}
+                        <div class="message">
+                            <div class="message-header">
+                                    <span class="event-message-title">{{ has_read_event_message.event_message.event.title }}</span>
+                                    <br>
+                                    グループ名 &nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_event_message.event_message.event.posted_group.name }}
+                            </div>
+
+
+                            <div class="message-header">
+                                <span>
+                                    {% if has_read_event_message.event_message.title %}
+                                        {{ has_read_event_message.event_message.title }}
+                                    {% endif %}
+
+                                    {% if not has_read_event_message.has_read %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                    {% endif %}
+                                </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_event_message.event_message.sent_at }}</small>
+                            </div>
+
+                            <div class="message-body">
+
+                                <div class="content">
+                                    {{ has_read_event_message.event_message.content|linebreaksbr|truncatechars:20 }}
+                                </div><br>
+                                <a href="{% url 'message:each_event_message_list' event_pk=has_read_event_message.event_message.event.pk %}">イベントメッセージ一覧</a>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        {% endfor %}
+
+                    {% if has_read_event_messages %}
+                        <p><a href="{% url 'message:event_message_list' %}">過去のメッセージ一覧</a></p>
+                    {% else %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="accordion" id="inner-group-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="group-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#inner-group-message" role="button" aria-expanded="true" aria-controls="inner-group-message">
+                <big>グループ内メッセージ</big>
+                {% if has_read_inner_group_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ has_read_inner_group_messages_count }}件
+                {% endif %}
+            </a>
+        </div><!-- /.card-header -->
+        <div id="inner-group-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#inner-group-message-accordion">
+            <div class="card-body">
+                <div class="message-list">
+                    {% for has_read_inner_group_message in has_read_inner_group_messages %}
+                        <div class="message">
+                            <div class="message-header">
+                                    グループ名 &nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_inner_group_message.group_message.group.name }}
+                            </div>
+
+
+                            <div class="message-header">
+                                <span>
+                                    {% if has_read_inner_group_message.group_message.title %}
+                                        {{ has_read_inner_group_message.group_message.title }}
+                                    {% endif %}
+
+                                    {% if not has_read_inner_group_message.has_read %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                    {% endif %}
+                                </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ has_read_inner_group_message.group_message.sent_at }}</small>
+                            </div>
+
+                            <div class="message-body">
+                                <div class="content">
+                                    {{ has_read_inner_group_message.group_message.content|linebreaksbr|truncatechars:20 }}
+                                </div><br>
+                                <a href="{% url 'message:inner_group_message_list' group_pk=has_read_inner_group_message.group_message.group.pk %}">メッセージ一覧</a>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+                    {% if not has_read_inner_group_messages %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% if is_administrator %}
+<h2>グループ管理者用メッセージ</h2>
+
+
+<div class="accordion" id="group-apply-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="group-apply-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#group-apply-message" role="button" aria-expanded="true" aria-controls="group-apply-message">
+                <big>グループ参加申請</big>
+                {% if group_apply_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ group_apply_messages_count }}件
+                {% endif %}
+            </a>
+        </div><!-- /.card-header -->
+        <div id="group-apply-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#group-apply-message-accordion">
+            <div class="card-body">
+
+
+                <div class="message-list">
+                    {% for group_apply_message in group_apply_messages %}
+                        <div class="message">
+
+
+                            <div class="message-header">
+                                <span>
+                                    グループ &nbsp;&nbsp;&nbsp;&nbsp;{{ group_apply_message.group.name }}
+                                    {% if not group_apply_message.has_read %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                    {% endif %}
+                                </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ group_apply_message.sent_at }}</small>
+                            </div>
+
+                            <div class="message-body">
+                                <div class="content">
+                                    <a href="{% url 'users:user_detail' pk=group_apply_message.applied_user.pk %}">{{ group_apply_message.applied_user.user.user_name }}</a>さんが、グループ{{ group_apply_message.group.name }}に参加申請をしました。
+                                </div><br>
+                                {% if not group_apply_message.applied_user in group_apply_message.group.member.all %}
+                                    <a href="{% url 'group:approve_user' group_pk=group_apply_message.group.pk user_pk=group_apply_message.applied_user.id %}">承認・非承認</a>&nbsp;&nbsp;&nbsp;
+                                {% endif %}
+                                <a href="{% url 'message:group_apply_message_list' group_pk=group_apply_message.group.pk %}">メッセージ一覧</a>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+                    {% if not group_apply_messages %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="accordion" id="event-join-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="event-join-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#event-join-message" role="button" aria-expanded="true" aria-controls="event-join-message">
+                <big>イベント申し込み</big>
+                {% if event_join_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ event_join_messages_count }}件
+                {% endif %}
+
+            </a>
+        </div><!-- /.card-header -->
+        <div id="event-join-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#event-join-message-accordion">
+            <div class="card-body">
+
+
+                <div class="message-list">
+                    {% for event_join_message in event_join_messages %}
+                        <div class="message">
+                            <div class="message-header">
+                                    <span class="event-message-title">{{  event_join_message.event.title }}</span>
+                                    <br>
+                                    グループ &nbsp;&nbsp;&nbsp;&nbsp;{{ event_join_message.event.posted_group.name }}
+                                    <span>
+                                        {% if not event_join_message.has_read %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                        {% endif %}
+                                    </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ event_join_message.joined_at }}</small>
+
+                            </div>
+
+
+                            <div class="message-body">
+                                <div class="content">
+                                    <a href="{% url 'users:user_detail' pk=event_join_message.applied_user.pk %}">{{ event_join_message.applied_user.user.user_name }}</a>さんがイベントに申し込みをしました。
+                                </div><br>
+                                <a href="{% url 'message:event_join_message_list' event_pk=event_join_message.event.pk %}">イベント申し込み一覧</a>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+                    {% if not event_join_messages %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="accordion" id="event-comment-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="event-comment-message-heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#event-comment-message" role="button" aria-expanded="true" aria-controls="event-comment-message">
+                <big>イベントへのコメント</big>
+                {% if event_comment_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ event_comment_messages_count }}件
+                {% endif %}
+
+            </a>
+        </div><!-- /.card-header -->
+        <div id="event-comment-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#event-comment-message-accordion">
+            <div class="card-body">
+
+                <div class="message-list">
+                    {% for event_comment_message in event_comment_messages %}
+                        <div class="message">
+                            <div class="message-header">
+                                    <span class="event-message-title">{{ event_comment_message.comment.event.title }}</span>
+                                    <br>
+                                    <br>
+                                    グループ &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{{ event_comment_message.comment.event.posted_group.name }}
+                                    <span>
+                                        {% if not event_comment_message.has_read %}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                        {% endif %}
+                                    </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ event_comment_message.comment.commented_at }}</small>
+
+                            </div>
+
+
+                            <div class="message-body">
+                                <div class="content">
+                                    ユーザー&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<a href="{% url 'users:user_detail' pk=event_comment_message.comment.user.pk %}">{{ event_comment_message.comment.user.user.user_name }}</a><br><br>
+                                    {{ event_comment_message.comment.comment|truncatechars:15 }}
+                                </div><br>
+                                <a href="{% url 'events:comment_list' event_pk=event_comment_message.comment.event.pk %}">イベントコメント一覧</a>
+                            </div>
+                        </div>
+
+
+
+
+                    {% endfor %}
+                    {% if event_comment_messages %}
+                        <a href="{% url 'events:all_comment_list' %}">全てのコメント</a>
+                    {% else %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="accordion" id="post-comment-message-accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="outdoor_heading1">
+            <a class="collapsed text-body d-block text-decoration-none" data-toggle="collapse" href="#post-comment-message" role="button" aria-expanded="true" aria-controls="post-comment-message">
+                <big>ブログへのコメント</big>
+                {% if post_comment_messages_count %}
+                    &nbsp;&nbsp;&nbsp;未読{{ post_comment_messages_count }}件
+                {% endif %}
+
+
+            </a>
+        </div><!-- /.card-header -->
+        <div id="post-comment-message" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#post-comment-message-accordion">
+            <div class="card-body">
+
+
+                <div class="message-list">
+                    {% for post_comment_message in post_comment_messages %}
+                        <div class="message">
+                            <div class="message-header">
+                                <span>投稿&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{% url 'blogs:post_detail' post_pk=post_comment_message.comment.post.pk %}">
+                                        {% if post_comment_message.comment.post.title  %}
+                                            {{ post_comment_message.comment.post.title }}
+                                        {% else %}
+                                            {{ post_comment_message.comment.post.content|truncatechars:15 }}
+                                        {% endif %}
+                                    </a>
+                                </span>
+                                <br>
+                                <br>
+                                    グループ &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{{ post_comment_message.comment.post.posted_group.name }}
+                                    <span>
+                                    {% if not post_comment_message.has_read %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;未読
+                                    {% endif %}
+                                    </span>
+                                <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ post_comment_message.comment.commented_at }}</small>
+
+                            </div>
+
+
+                            <div class="message-body">
+                                <div class="content">
+                                    ユーザー&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<a href="{% url 'users:user_detail' pk=post_comment_message.comment.user.pk %}">{{ post_comment_message.comment.user.user.user_name }}</a><br><br>
+                                    {{ post_comment_message.comment.comment|truncatechars:15 }}
+                                </div><br>
+                                <a href="{% url 'blogs:comment_list' group_pk=post_comment_message.comment.post.posted_group.pk %}">ブログコメント一覧</a>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+                    {% if not post_comment_messages %}
+                        <p>（メッセージはありません。）</p>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endif %}
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>{{ group.name }}を本当に退会しますか？</p>
+    <input type="hidden" name="delete_complete" value="delete_complete">
+    <button type="submit" class="btn btn-danger">退会する</button>
+</form>
+{% endblock content %}

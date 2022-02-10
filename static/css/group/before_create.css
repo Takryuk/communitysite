@@ -1,0 +1,17 @@
+h1{
+    font-size: 3vmax;
+}
+
+.community-rule{
+    color: rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 576px){
+
+
+    h1{
+        font-size: 4vmax;
+    }
+
+}
+

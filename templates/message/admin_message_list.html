@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% load message_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<div class="message-list">
+    <h2>一般メッセージ</h2>
+        {% for admin_message in admin_messages %}
+        <div class="message">
+            {% if admin_message.administrator %}
+                <div class="message-header">
+                    <span>管理者追加のお知らせ
+                        {% if not admin_message.has_read %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;未読
+                        {% endif %}
+                    </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ admin_message.sent_at }}</small>
+                </div>
+
+                <div class="message-body">
+
+                    <div class="content">
+                        グループ{{ admin_message.group.name }}の管理者、{{ admin_message.administrator.user.user_name }}さんがあなたに{{ admin_message.group.name }}の管理者になるよう依頼しました。
+                    </div>
+
+                    {% if admin_message.reason %}
+                    <div class="reason">
+
+                        要請理由: &nbsp;&nbsp;&nbsp;&nbsp;{{  admin_message.reason }}
+                    </div>
+                    {% endif %}
+
+                    <div class="become-administrator">
+                        {% is_before_administrator %}
+                    </div>
+
+
+                </div>
+
+
+
+            {% else %}
+                <div class="message-header">
+                    <span>
+                        {% if admin_message.title %}
+                            {{ admin_message.title }}&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% autoescape off %}
+                            {% has_read_admin_message admin_message %}
+                        {% endautoescape %}
+                    </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ admin_message.sent_at }}</small>
+                </div>
+
+                <div class="message-body">
+
+                    <div class="content">
+                        {{ admin_message.content|linebreaksbr }}
+                    </div>
+
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% endfor %}
+
+    {% if not admin_messages %}
+        <p>（メッセージはありません。）</p>
+    {% endif %}
+</div>
+
+{% include 'pagination.html' %}
+
+
+
+
+{% endblock %}

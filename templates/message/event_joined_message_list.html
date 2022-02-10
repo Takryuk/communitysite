@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load message_tags %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+
+
+    <div class="message-list">
+        <h3>イベント申し込み</h3>
+        {% for event_join_message in event_join_messages %}
+            <div class="message">
+                <div class="message-header">
+                        <span class="event-message-title">{{  event_join_message.event.title }}</span>
+                        <br>
+                        グループ &nbsp;&nbsp;&nbsp;&nbsp;{{ event_join_message.event.posted_group.name }}
+                        <span>
+                            {% autoescape off %}
+                                {% has_read_event_join_message event_join_message %}
+                            {% endautoescape %}
+                        </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ event_join_message.joined_at }}</small>
+
+                </div>
+
+
+                <div class="message-body">
+                    <div class="content">
+                        <a href="{% url 'users:user_detail' pk=event_join_message.applied_user.pk %}">{{ event_join_message.applied_user.user.user_name }}</a>さんがイベントに申し込みをしました。
+                    </div>
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+        {% if not event_join_messages %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+{% include 'pagination.html' %}
+
+
+
+
+
+
+{% endblock %}

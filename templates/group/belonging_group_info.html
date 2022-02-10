@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>所属グループ</h2>
+<h2><a href="{% url 'group:group_detail' group_pk=group.pk %}">{{ group.name }}</a></h2><hr>
+<div>
+
+    <p><a href="{% url 'message:inner_group_message_list' group_pk=group.pk %}">グループ内メッセージ</a></p>
+
+
+
+
+<p><a href="{% url 'group:leave_group' group_pk=group.pk %}">グループを脱退する</a></p>
+
+</div>
+
+
+
+
+{% endblock content %}

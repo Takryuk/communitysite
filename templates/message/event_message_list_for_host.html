@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% load message_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<p>グループ『{{ event.posted_group.name }}』主催のイベント</p>
+<h2>{{ event.title }}</h2>
+<p>のメッセージ</p>
+
+    <div class="message-list">
+        {% for event_message in event_messages %}
+            <div class="message">
+
+                <div class="message-header">
+                    <span>
+                        {% if event_message.title %}
+                            {{ event_message.title }}
+                        {% endif %}
+
+                    </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ event_message.sent_at }}</small>
+                </div>
+
+                <div class="message-body">
+
+                    <div class="content">
+                        {{ event_message.content|linebreaksbr|truncatechars:30 }}
+                    </div><br>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+        {% if not event_messages %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+{% include 'pagination.html' %}
+
+{% endblock %}

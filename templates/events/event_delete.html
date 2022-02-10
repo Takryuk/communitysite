@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <div>
+        {{ event.title }}を本当に削除しますか？
+    </div>
+
+    <form method="post">
+      <button class="btn btn-danger">削除する</button>
+      {% csrf_token %}
+    </form>
+
+{% endblock %}

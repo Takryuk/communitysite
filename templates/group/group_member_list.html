@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{%  load tags %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+    <h1>{{ group.name }}</h1>
+
+
+
+    {% for member in members %}
+
+
+    {% if member.user.origin %}
+        <img width="30%"  src="{{ member.user.url }}">
+    {% endif %}{{ member.user.user_name }}<br>
+<a href="{% url 'group:remove_user' group_pk=group.pk user_pk=member.pk %}">削除する</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{% url 'group:apply_administrator' group_pk=group.pk user_pk=member.pk %}">管理者になるよう依頼する</a>
+
+    {% endfor %}
+
+
+
+{% endblock content %}

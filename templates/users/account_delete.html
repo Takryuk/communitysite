@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>退会すると、{{ user.user_name }}さんのアカウントと{{ user.user_name }}さん一人が管理しているグループが削除されます。</p>
+    <p>よろしいですか？</p>
+    <input type="hidden" name="delete_complete" value="delete_complete">
+    <button type="submit" class="btn btn-danger">退会する</button>
+</form>
+{% endblock content %}

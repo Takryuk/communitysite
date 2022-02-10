@@ -1,0 +1,39 @@
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: red;
+}
+
+
+
+li{
+    list-style: none;
+}
+
+
+
+.group_form_field{
+    padding-bottom: 30px;
+    width: 80%;
+
+}
+
+
+.form-control{
+    background-color: #f9f9f9;
+}
+
+
+
+@media only screen and (max-width: 576px){
+
+
+    .group_form_field{
+        padding-bottom: 3vmax;
+        width: 100%;
+
+    }
+
+}

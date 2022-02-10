@@ -1,0 +1,79 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/users/user_profile.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+    <div class="user-image-wrapper">
+        <div class="user-image-subwrapper no-image">
+            {% if object.origin %}
+
+
+                <img class="user-img" src="{{ object.origin.url }}">
+            {% else %}
+                    No Image
+         　　{% endif %}
+        </div>
+
+    </div>
+    <h1>{{ object.user.user_name }}</h1>
+    <div class="base-info">
+        {% if object.age %}
+            <div class="user-age">
+                年齢&nbsp;&nbsp;:&nbsp;&nbsp;{{ object.age }}歳
+            </div>
+        {% endif %}
+
+
+
+        {% if not object.sex == 'N/A' %}
+            <div class="user-sex">
+                性別&nbsp;&nbsp;:&nbsp;&nbsp;{{ object.get_sex_display }}
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="user-profile-wrapper">プロフィール</div>
+        {% if object.profile %}
+
+            <div class="user-profile">
+
+                {{ object.profile|linebreaksbr }}
+
+            </div>
+        {% else %}
+            <p class="no-profile">（まだプロフィールはありません。）</p>
+        {% endif %}
+
+
+    {% if object.twitter_link %}
+
+        <div class="user-link">
+
+            Twitter&nbsp;&nbsp;:&nbsp;&nbsp;{{ object.twitter_link|urlize }}
+        </div>
+
+    {% endif %}
+    {% if object.facebook_link %}
+
+        <div class="user-link">
+
+            Facebook&nbsp;&nbsp;:&nbsp;&nbsp;{{ object.facebook_link|urlize }}
+        </div>
+
+    {% endif %}
+    {% if object.instagram_link %}
+
+        <div class="user-link">
+
+            Instagram&nbsp;&nbsp;:&nbsp;&nbsp;{{ object.instagram_link|urlize }}
+        </div>
+    {% endif %}
+
+
+{% endblock %}

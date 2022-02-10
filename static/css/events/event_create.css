@@ -1,0 +1,65 @@
+#accordion .card-header a[data-toggle="collapse"].collapsed::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f078";/* chevron-down */
+  float: right;
+}
+#accordion .card-header a[data-toggle="collapse"]::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f077";/* chevron-up */
+  float: right;
+}
+
+
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: red;
+}
+
+
+
+li{
+    list-style: none;
+}
+
+
+
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: red;
+}
+
+.group_form_field{
+    padding-bottom: 30px;
+    width: 80%;
+
+}
+
+
+.form-control{
+    background-color: #f9f9f9;
+}
+
+
+.card{
+border-radius: 5px !important;
+}
+
+.card-header{
+    background-color: #ededed;
+
+}
+
+.card-body{
+    background-color: #f9f9f9;
+    border-bottom:1px solid rgba(0, 0, 0, .125)
+
+}
+

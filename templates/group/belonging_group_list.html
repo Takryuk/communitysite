@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/group/belonging_group.css' %}">
+
+{% endblock css %}
+
+{% block content %}
+
+<div class="group-list">
+    <h2>所属グループ</h2>
+
+        {% for group in groups %}
+        <div class="group">
+            <a href="{% url 'group:belonging_group_info' group_pk=group.pk %}" class="group-link"></a>
+            <div class="group-body row">
+
+                {% if group.image1 %}
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4 ">
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+                                <img class="image"  src="{{ group.image1.url }}">
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <div class="col-xs-12 col-sm-6 col-md-6  offset-md-1 col-lg-6 sentence">
+                    <div class="title">
+                        {{ group.name }}
+                    </div>
+
+                    <div class="subtitle">
+                        {% if group.subtitle %}
+                            {{ group.subtitle|truncatechars:20 }}
+                        {% endif %}
+                    </div>
+                    <div class="prefecture">
+                        {% for prefecture in group.prefecture.all %}
+                        <div class="prefecture-body">
+                        {{ prefecture }}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+
+
+<div class="group-list">
+    <h2>管理グループ</h2>
+
+        {% for group in managing_groups %}
+        <div class="group">
+            <a href="{% url 'group:managing_group' group_pk=group.pk %}" class="group-link"></a>
+            <div class="group-body row">
+
+                {% if group.image1 %}
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4 ">
+                        <div class="image-wrapper">
+                            <div class="image-subwrapper">
+                                <img class="image"  src="{{ group.image1.url }}">
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <div class="col-xs-12 col-sm-6 col-md-6  offset-md-1 col-lg-6 sentence">
+                    <div class="title">
+                        {{ group.name }}
+                    </div>
+
+                    <div class="subtitle">
+                        {% if group.subtitle %}
+                            {{ group.subtitle|truncatechars:30 }}
+                        {% endif %}
+                    </div>
+                    <div class="prefecture">
+                        {% for prefecture in group.prefecture.all %}
+                        <div class="prefecture-body">
+                        {{ prefecture }}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/group/before_create.css' %}">
+{% endblock css %}
+
+{% block content %}
+<h1>
+    安心・安全なサイト実現するために
+</h1>
+<br>
+<p>
+    ユーザー皆様が安心して使えるサイトを実現するために、コミュニティ作成には最低限の条件があります。<br>
+</p>
+<br><br><br>
+<p>
+    以下の目的でのコミュニティ・コンテンツの作成は禁止です。<br><br>
+</p>
+<ul class="community-rule">
+    <li>政治団体・宗教団体などの活動・宣伝・勧誘</li>
+    <li>ネットワークビジネスなど営利目的の勧誘</li>
+    <li>犯罪行為を目的とするもの</li>
+    <li>他者への嫌がらせ・誹謗中傷・不利益を与える表現・行為</li>
+    <li>わいせつな行為・性行為を目的とするもの</li>
+    <li>暴力的・性的な表現など他ユーザーに不快感を与える表現・行為</li>
+    <li>人種，国籍，信条，性別，社会的身分，門地等などによる差別的表現</li>
+    <li>公序良俗に反する表現・行為</li>
+    <li>スパム行為</li>
+    <li>その他運営が不適切と判断した表現・行為</li>
+</ul>
+
+<p>  違反するコミュニティ・コンテンツが発覚した場合、該当するコミュニティ・コンテンツ・アカウントが削除される可能性があります。<br>
+</p>
+
+
+<br><br><br>
+<p>
+    上記に同意の上コミュニティ登録をよろしくお願いします。 <br><br>
+</p>
+
+
+<form method="post" action="{% url 'group:create_group' %}">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="'checkbox">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} {{ field.errors }}
+    <div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success btn-lg" >登録</button>
+</form>
+
+{% endblock content %}

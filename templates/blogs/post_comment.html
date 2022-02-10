@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/message/message_list.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+
+
+<big>グループ</big>
+<h1><a href="{% url 'group:group_detail' group_pk=group.pk %}">{{ group.name }}</a></h1>
+のブログへのコメント
+
+
+    <div class="message-list">
+        {% for comment in post_comments %}
+            <div class="message">
+                <div class="message-header">
+                        グループ &nbsp;&nbsp;&nbsp;&nbsp;{{ comment.post.posted_group.name }}
+                        <span>
+                        {% autoescape off %}
+                            {% has_read request comment %}
+                        {% endautoescape %}
+                        </span>
+                    <small class="sent-at">&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.commented_at }}</small>
+
+                </div>
+
+
+                <div class="message-body">
+                    <div class="content">投稿&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'blogs:post_detail' post_pk=comment.post.pk %}">
+                            {% if comment.post.title  %}
+                                {{ comment.post.title }}
+                            {% else %}
+                                {{ comment.post.content|truncatechars:15 }}
+                            {% endif %}
+                        </a>
+                    </div><br>
+
+                    <div class="content">
+                        ユーザー&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'users:user_detail' pk=comment.user.pk %}">
+                            {{ comment.user.user.user_name|truncatechars:15 }}
+                        </a>
+                        <br><br>
+                        {{ comment.comment }}
+                    </div><br>
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+        {% if post_comments %}
+            {% include 'pagination.html' %}
+        {% else %}
+            <p>（メッセージはありません。）</p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

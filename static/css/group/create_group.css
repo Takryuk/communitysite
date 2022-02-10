@@ -1,0 +1,60 @@
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: red;
+}
+
+
+
+li{
+    list-style: none;
+}
+
+
+
+
+.errorlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: red;
+}
+
+.group_form_field{
+    padding-bottom: 30px;
+
+}
+
+
+.form-control{
+    background-color: #f9f9f9;
+}
+
+.form-horizontal{
+    background-color: #f9f9f9;
+
+}
+
+.generation-choices{
+    background-color: #f9f9f9;
+
+}
+
+.generation-choices ul{
+    padding-inline-start: 0px;
+    padding-left: 20px;
+
+}
+
+.card-header{
+    background-color: #ededed;
+
+}
+
+.card-body{
+    background-color: #f9f9f9;
+    border-bottom:1px solid rgba(0, 0, 0, .125)
+
+}
+
